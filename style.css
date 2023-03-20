@@ -2,13 +2,17 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: rgb(50, 97, 244);
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 51%, rgba(0, 212, 255, 1) 100%);
 }
 
 .container {
     width: 1000px;
     height: 550px;
     margin: 20px auto;
+    position: absolute;
+    top: 20%;
+    left: 25%;
 }
 
 .calculator {
@@ -31,11 +35,12 @@ body {
     height: 20px;
     margin: 0 20px;
     padding-top: 20px;
-    font-size: 15px;
+    font-size: 20px;
     color: #919191;
 }
 
 .output {
+    overflow: hidden;
     text-align: right;
     height: 60px;
     margin: 10px 20px;
@@ -46,6 +51,7 @@ body {
     height: 400px;
 }
 
+.backspace,
 .operator,
 .number,
 .empty {
@@ -64,47 +70,56 @@ body {
     background-color: #eaedef;
 }
 
-.operator {
+.operator,
+.backspace {
     background-color: lightgrey;
 }
 
 .number,
-.operator {
+.operator,
+.backspace {
     cursor: pointer;
 }
 
 .operator:active,
+.backspace:active,
 .number:active {
     font-size: 13px;
 }
 
 .operator:focus,
+.backspace:focus,
 .number:focus,
 .empty:focus {
     outline: 0;
 }
 
 .operator:nth-child(4) {
+    color: white;
     font-size: 20px;
     background-color: rgb(111, 144, 239);
 }
 
 .operator:nth-child(8) {
+    color: white;
     font-size: 20px;
     background-color: rgb(111, 144, 239);
 }
 
 .operator:nth-child(12) {
+    color: white;
     font-size: 20px;
     background-color: rgb(111, 144, 239);
 }
 
 .operator:nth-child(16) {
+    color: white;
     font-size: 20px;
     background-color: rgb(111, 144, 239);
 }
 
 .operator:nth-child(20) {
+    color: white;
     font-size: 20px;
     background-color: rgb(111, 144, 239);
 }

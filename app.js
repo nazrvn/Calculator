@@ -27,6 +27,8 @@ new_output.classList.add('output');
 
     new_output.appendChild(p_output);
 
+
+
 // création d'une balise div avec une class 'keyboard'
 // ceci va contenire nos bouttons d'entrées
 const new_keyboard = document.createElement("div");
@@ -37,8 +39,8 @@ const clear = document.createElement('button');
     clear.id = 'clear';
     clear.innerText="C";
 const backspace = document.createElement('button');
-    backspace.classList.add('operator');
-    backspace.id = 'backspace';
+    backspace.classList.add('backspace');
+    backspace.id = 'backspaceButton';
     backspace.innerText="CE";
 const modulo = document.createElement('button');
     modulo.classList.add('operator');
@@ -46,7 +48,7 @@ const modulo = document.createElement('button');
     modulo.innerText="%";
 const diviser = document.createElement('button');
     diviser.classList.add('operator');
-    diviser.id = 'diviser';
+    diviser.id = '/';
     diviser.innerText="/";
 
 const seven = document.createElement('button');
@@ -150,6 +152,101 @@ new_keyboard.appendChild(empty1);
 new_keyboard.appendChild(zero);
 new_keyboard.appendChild(empty2);
 new_keyboard.appendChild(egal);
+
+
+function getHistory() {
+    return document.getElementById("history-value").innerText;
+}
+
+function printHistory(num) {
+    document.getElementById("history-value").innerText = num;
+
+}
+
+// fonction de sortie, affiche le resultat dans la sortie.
+function getOutput() {
+    return document.getElementById("output-value").innerText;
+}
+
+function printOutput(num) {
+    if(num == "") {
+        document.getElementById("output-value").innerText = num;
+    } else {
+        document.getElementById("output-value").innerText = getFormattedNumber(num);
+    }         
+} 
+
+function getFormattedNumber(num) {
+    if(num == "-") {
+        return "";
+    }
+    let n = Number(num);
+    let value = n.toLocaleString("en");
+    return value;
+}
+
+// fonction, affiche les virgules a la sortie d'affichage 
+function avecComma(num) {
+    return Number(num.replace(/,/g,''));
+}
+
+// fonction pour supprimer la dernière entrée
+function removeLastEntry() {
+    let output = getOutput();
+    if (output) {
+        output = output.slice(0, output.length - 1);
+        printOutput(output);
+    }
+}
+
+// attacher la fonction au clic de la touche CE
+backspace.addEventListener('click', function() {
+    removeLastEntry();
+});
+
+let operator = document.getElementsByClassName("operator");
+for(let i = 0; i < operator.length; i++) {
+    operator[i].addEventListener("click", function() {
+        if(this.id == "clear") {
+            printHistory("");
+            printOutput("0");
+        } else {
+            let output = getOutput();
+            let history = getHistory();
+            if(output === "" && history != "") {
+                if(isNaN(history[history.length - 1])) {
+                    history = history.slice(0, history.length - 1);
+                }
+            }
+            if(output != "" || history != "") {
+                output = output === "" ?
+                output:avecComma(output);
+                history = history + output;
+                if(this.id === "=") {
+                    let result = eval(history);
+                    printOutput(result);
+                    printHistory("");
+                } else {
+                    history = history + ' ' + this.id;
+                    printHistory(history);
+                    printOutput("");
+                }
+            }
+        }
+    });
+}
+
+let number = document.getElementsByClassName("number");
+for(let i = 0; i < number.length; i++) {
+    number[i].addEventListener("click", function() {
+        let output = avecComma(getOutput());
+        if(output != NaN) { // si output est un nombre
+            output = output + this.id;
+            printOutput(output);
+        }
+    });
+}
+
 
 
 
